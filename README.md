@@ -2,11 +2,11 @@
 
  - [x] Cadastro de usuários via API Restful.
  - [x] Transferência de valor entre usuários levando em consideração as regras descritas no desafio.
- - [x] Processamento assíncrona de transferências, via fila.
+ - [x] Processamento assíncrono de transferências, via fila.
  - [x] Validação de saldo antes de realizar a transferência, levando em consideração as transações pendentes do usuário.
- - [ ] Lógica de notificações* e testes
+ - [ ] Lógica de notificações e testes
 
-* Para implementar as notificações, usaria um listener no model de transações para enviar as notificações usando o mecanismos de notificações do laravel.
+Para implementar as notificações, usaria um listener no model de transações para enviar as notificações usando o mecanismos de notificações do laravel.
 
 # Stack
 
