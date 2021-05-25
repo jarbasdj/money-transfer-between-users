@@ -1,0 +1,49 @@
+version: "3.8"
+
+# Named volumes
+volumes:
+  # MySQL Data
+  mysql-data:
+    driver: local
+
+services:
+  # PHP
+  php:
+    build: ./docker/php
+    container_name: php
+    volumes:
+      - ./:/var/www/app
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+  # NGINX
+  nginx:
+    build: ./docker/nginx
+    container_name: nginx
+    volumes:
+      - ./public:/var/www/app/public
+    ports:
+      - 80:80
+    depends_on:
+      - php
+
+  # MySQL (5.7)
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_DATABASE=${DB_DATABASE}"
+      - "MYSQL_USER=${DB_USERNAME}"
+      - "MYSQL_PASSWORD=${DB_PASSWORD}"
+      - "MYSQL_ROOT_PASSWORD=${DB_PASSWORD}"
+
+  # Redis
+  redis:
+    image: redis:alpine
+    command: redis-server
+    ports:
+      - 6379:6379
